@@ -31,6 +31,59 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   // Variable to hold calculation result
   String _display = '0';
 
+  // store first operand
+  double _firstOperand = 0;
+  
+  // Store operator
+  String _operator = '';
+  
+  // Flag to check if we should start a new number
+  bool _shouldResetDisplay = false;
+
+  // Handle number button press (0-9)
+  void handleNumberPress(String number) {
+    setState(() {
+      if (_display == '0' || _shouldResetDisplay) {
+        _display = number;
+        _shouldResetDisplay = false;
+      } else {
+        _display += number;
+      }
+    });
+  }
+
+  // Handle operator button press (+, -, *, /)
+  void handleOperatorPress(String operator) {
+    setState(() {
+      _firstOperand = double.parse(_display);
+      _operator = operator;
+      _shouldResetDisplay = true;
+    });
+  }
+
+
+  // Handle clear button press to reset calculator
+  void handleClearPress() {
+    setState(() {
+      _display = '0';
+      _firstOperand = 0;
+      _operator = '';
+      _shouldResetDisplay = false;
+    });
+  }
+
+  // Handle decimal point button press
+  void handleDecimalPress() {
+    setState(() {
+      if (_shouldResetDisplay) {
+        _display = '0.';
+        _shouldResetDisplay = false;
+      } else if (!_display.contains('.')) {
+        _display += '.';
+      }
+    });
+  }
+
   // Build a calculator button widget
   Widget _buildButton(String label, Color color, VoidCallback onPressed) {
     return Expanded(
@@ -93,10 +146,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      _buildButton('7', Colors.blue, () {}),
-                      _buildButton('8', Colors.blue, () {}),
-                      _buildButton('9', Colors.blue, () {}),
-                      _buildButton('/', Colors.orange, () {}),
+                      _buildButton('7', Colors.blue, () => handleNumberPress('7')),
+                      _buildButton('8', Colors.blue, () => handleNumberPress('8')),
+                      _buildButton('9', Colors.blue, () => handleNumberPress('9')),
+                      _buildButton('/', Colors.orange, () => handleOperatorPress('/')),
                     ],
                   ),
                 ),
@@ -104,10 +157,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      _buildButton('4', Colors.blue, () {}),
-                      _buildButton('5', Colors.blue, () {}),
-                      _buildButton('6', Colors.blue, () {}),
-                      _buildButton('*', Colors.orange, () {}),
+                      _buildButton('4', Colors.blue, () => handleNumberPress('4')),
+                      _buildButton('5', Colors.blue, () => handleNumberPress('5')),
+                      _buildButton('6', Colors.blue, () => handleNumberPress('6')),
+                      _buildButton('*', Colors.orange, () => handleOperatorPress('*')),
                     ],
                   ),
                 ),
@@ -115,10 +168,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      _buildButton('1', Colors.blue, () {}),
-                      _buildButton('2', Colors.blue, () {}),
-                      _buildButton('3', Colors.blue, () {}),
-                      _buildButton('-', Colors.orange, () {}),
+                      _buildButton('1', Colors.blue, () => handleNumberPress('1')),
+                      _buildButton('2', Colors.blue, () => handleNumberPress('2')),
+                      _buildButton('3', Colors.blue, () => handleNumberPress('3')),
+                      _buildButton('-', Colors.orange, () => handleOperatorPress('-')),
                     ],
                   ),
                 ),
@@ -126,10 +179,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      _buildButton('C', Colors.red, () {}),
-                      _buildButton('0', Colors.blue, () {}),
-                      _buildButton('.', Colors.blue, () {}),
-                      _buildButton('+', Colors.orange, () {}),
+                      _buildButton('C', Colors.red, () => handleClearPress()),
+                      _buildButton('0', Colors.blue, () => handleNumberPress('0')),
+                      _buildButton('.', Colors.blue, () => handleDecimalPress()),
+                      _buildButton('+', Colors.orange, () => handleOperatorPress('+')),
                     ],
                   ),
                 ),
