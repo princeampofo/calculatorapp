@@ -57,6 +57,66 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
               ),
             ),
           ),
+          
+          // Calculator buttons
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {},child: Text('7')),
+                      TextButton(onPressed: () {},child: Text('8')),
+                      TextButton(onPressed: () {},child: Text('9')),
+                      TextButton(onPressed: () {},child: Text('/')),
+                    ],
+                  ),
+                ),
+              
+                Expanded(
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {}, child: Text('4')),
+                      TextButton(onPressed: () {}, child: Text('5')),
+                      TextButton(onPressed: () {}, child: Text('6')),
+                      TextButton(onPressed: () {}, child: Text('*')),
+                    ],
+                  ),
+                ),
+                
+                Expanded(
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {}, child: Text('1')),
+                      TextButton(onPressed: () {}, child: Text('2')),
+                      TextButton(onPressed: () {}, child: Text('3')),
+                      TextButton(onPressed: () {}, child: Text('-')),
+                    ],
+                  ),
+                ),
+                
+                Expanded(
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {}, child: Text('C')),
+                      TextButton(onPressed: () {}, child: Text('0')),
+                      TextButton(onPressed: () {}, child: Text('.')),
+                      TextButton(onPressed: () {}, child: Text('+')),
+                    ],
+                  ),
+                ),
+                
+                Expanded(
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {}, child: Text('=')),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
