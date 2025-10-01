@@ -29,25 +29,25 @@ class CalculatorHomePage extends StatefulWidget {
 class _CalculatorHomePageState extends State<CalculatorHomePage> {
 
   // Variable to hold calculation result
-  String _display = '0';
+  String output = '0';
 
   // store first operand
-  double _firstOperand = 0;
+  double firstOperand = 0;
   
   // Store operator
-  String _operator = '';
+  String op = '';
   
   // Flag to check if we should start a new number
-  bool _shouldResetDisplay = false;
+  bool resetDisplay = false;
 
   // Handle number button press (0-9)
   void handleNumberPress(String number) {
     setState(() {
-      if (_display == '0' || _shouldResetDisplay) {
-        _display = number;
-        _shouldResetDisplay = false;
+      if (output == '0' || resetDisplay) {
+        output = number;
+        resetDisplay = false;
       } else {
-        _display += number;
+        output += number;
       }
     });
   }
@@ -55,9 +55,9 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   // Handle operator button press (+, -, *, /)
   void handleOperatorPress(String operator) {
     setState(() {
-      _firstOperand = double.parse(_display);
-      _operator = operator;
-      _shouldResetDisplay = true;
+      firstOperand = double.parse(output);
+      op = operator;
+      resetDisplay = true;
     });
   }
 
@@ -65,24 +65,61 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   // Handle clear button press to reset calculator
   void handleClearPress() {
     setState(() {
-      _display = '0';
-      _firstOperand = 0;
-      _operator = '';
-      _shouldResetDisplay = false;
+      output = '0';
+      firstOperand = 0;
+      op = '';
+      resetDisplay = false;
     });
   }
 
   // Handle decimal point button press
   void handleDecimalPress() {
     setState(() {
-      if (_shouldResetDisplay) {
-        _display = '0.';
-        _shouldResetDisplay = false;
-      } else if (!_display.contains('.')) {
-        _display += '.';
+      if (resetDisplay) {
+        output = '0.';
+        resetDisplay = false;
+      } else if (!output.contains('.')) {
+        output += '.';
       }
     });
   }
+
+  // Handle equals button press to calculate result
+void handleEqualsPress() {
+  setState(() {
+    double secondOperand = double.parse(output);
+    double result = 0;
+
+    switch (op) {
+      case '+':
+        result = firstOperand + secondOperand;
+        break;
+      case '-':
+        result = firstOperand - secondOperand;
+        break;
+      case '*':
+        result = firstOperand * secondOperand;
+        break;
+      case '/':
+        if (secondOperand == 0) {
+          output = 'Error';
+          op = '';
+          return;
+        }
+        result = firstOperand / secondOperand;
+        break;
+    }
+
+    if (result == result.toInt()) {
+      output = result.toInt().toString();
+    } else {
+      output = result.toString();
+    }
+    
+    op = '';
+    resetDisplay = true;
+  });
+}
 
   // Build a calculator button widget
   Widget _buildButton(String label, Color color, VoidCallback onPressed) {
@@ -115,7 +152,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calculator'),
+        title: const Text('Simple Calculator'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
@@ -128,7 +165,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
               alignment: Alignment.bottomRight,
               color: Colors.black87,
               child: Text(
-                _display,
+                output,
                 style: const TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
@@ -190,7 +227,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      _buildButton('=', Colors.green, () {}),
+                      _buildButton('=', Colors.green, () => handleEqualsPress()),
                     ],
                   ),
                 ),
