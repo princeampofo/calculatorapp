@@ -31,6 +31,33 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   // Variable to hold calculation result
   String _display = '0';
 
+  // Build a calculator button widget
+  Widget _buildButton(String label, Color color, VoidCallback onPressed) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color,
+            padding: const EdgeInsets.all(24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +93,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      TextButton(onPressed: () {},child: Text('7')),
-                      TextButton(onPressed: () {},child: Text('8')),
-                      TextButton(onPressed: () {},child: Text('9')),
-                      TextButton(onPressed: () {},child: Text('/')),
+                      _buildButton('7', Colors.blue, () {}),
+                      _buildButton('8', Colors.blue, () {}),
+                      _buildButton('9', Colors.blue, () {}),
+                      _buildButton('/', Colors.orange, () {}),
                     ],
                   ),
                 ),
@@ -77,10 +104,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      TextButton(onPressed: () {}, child: Text('4')),
-                      TextButton(onPressed: () {}, child: Text('5')),
-                      TextButton(onPressed: () {}, child: Text('6')),
-                      TextButton(onPressed: () {}, child: Text('*')),
+                      _buildButton('4', Colors.blue, () {}),
+                      _buildButton('5', Colors.blue, () {}),
+                      _buildButton('6', Colors.blue, () {}),
+                      _buildButton('*', Colors.orange, () {}),
                     ],
                   ),
                 ),
@@ -88,10 +115,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      TextButton(onPressed: () {}, child: Text('1')),
-                      TextButton(onPressed: () {}, child: Text('2')),
-                      TextButton(onPressed: () {}, child: Text('3')),
-                      TextButton(onPressed: () {}, child: Text('-')),
+                      _buildButton('1', Colors.blue, () {}),
+                      _buildButton('2', Colors.blue, () {}),
+                      _buildButton('3', Colors.blue, () {}),
+                      _buildButton('-', Colors.orange, () {}),
                     ],
                   ),
                 ),
@@ -99,10 +126,10 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      TextButton(onPressed: () {}, child: Text('C')),
-                      TextButton(onPressed: () {}, child: Text('0')),
-                      TextButton(onPressed: () {}, child: Text('.')),
-                      TextButton(onPressed: () {}, child: Text('+')),
+                      _buildButton('C', Colors.red, () {}),
+                      _buildButton('0', Colors.blue, () {}),
+                      _buildButton('.', Colors.blue, () {}),
+                      _buildButton('+', Colors.orange, () {}),
                     ],
                   ),
                 ),
@@ -110,7 +137,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                 Expanded(
                   child: Row(
                     children: [
-                      TextButton(onPressed: () {}, child: Text('=')),
+                      _buildButton('=', Colors.green, () {}),
                     ],
                   ),
                 ),
